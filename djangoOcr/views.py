@@ -138,10 +138,13 @@ def home(request):
         ################ [1] Save input image to database ##############
         document = FilesUpload.objects.create(file=file2)
         document.save()
+        text = read_text_from_file('output.txt')
         pan_card_data = convert_image_to_text(file2.name)
         if not pan_card_data:
             return render(request, "error.html", {'error' : show_error()})
         else:        
-            return render(request, "pancard.html", {'data' : pan_card_data})
+            return render(request, "pancard.html", 
+            {'data' : pan_card_data,
+             'convertedText': text})
     return render(request, "index.html")
     
